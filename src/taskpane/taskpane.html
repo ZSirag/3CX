@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3CX-Tools</title>
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js" defer></script>
+    <script src="./taskpane.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="./taskpane.css" />
+  </head>
+  <body>
+    <!--  VERSION SELECTOR  -->
+    <div id="version-sel-container">
+      <div class="center-middle" id="version-sel-container-middle">
+        <div id="version-sel-form">
+          <div class="center-middle" id="version-sel-img">
+            <img src="../../assets/logo-filled.png" />
+          </div>
+          <div id="version-sel-btn">
+            <button id="version-sel-btn20">v20</button>
+            
+            <button id="version-sel-btn18">v18</button>
+            <button id="version-sel-btntools">Tools</button>
+            <button id="chrome">Chrome extention</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- v20-18 -->
+    <div id="functions-container" style="display: none">
+      <div>
+        <div id="functions-container-img" class="center-middle">
+          <img src="../../assets/logo-filled.png" />
+        </div>
+      </div>
+      <div style="overflow: auto">
+        <div id="version-info" class="headerinfo"></div>
+        <div class="functions-info">Functions</div>
+        <div id="fqdn-container"><input type="text" placeholder="FQDN" id="fqdn" /></div>
+        <div class="center">
+          <div class="functions-btn-container">
+            <div class="functions-btn">
+              <i class="bi bi-gear-fill"></i>
+              <p>Import config</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-file-earmark-fill"></i>
+              <p>Gen pages</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-person-fill-add"></i>
+              <p>Create exts</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-person-vcard-fill"></i>
+              <p>Create PBook</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-person-fill-down"></i>
+              <p>Export exts</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-postcard-fill"></i>
+              <p>Export PBook</p>
+            </div>
+          </div>
+        </div>
+        <div class="functions-info">Phones</div>
+        <div id="brand-container" class="select-options">
+          <select name="brand" id="phone-brand" class="select-options-select">
+            <option value="0" selected disabled>Select phone brand</option>
+            <option value="1">Yealink</option>
+          </select>
+          <button id="phone-brand-btn" class="select-options-btn">Add phone</button>
+        </div>
+      </div>
+      <div class="center-middle" id="home-btn1">
+        <p>Home</p>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div id="tools-container" style="display: none">
+      <div>
+        <div id="functions-container-img" class="center-middle">
+          <img src="../../assets/logo-filled.png" />
+        </div>
+      </div>
+      <div style="overflow-y: auto">
+        <div class="headerinfo">TOOLS</div>
+        <div class="functions-info">DID Functions</div>
+        <div class="center">
+          <div class="functions-btn-container">
+            <div class="functions-btn">
+              <i class="bi bi-gear-fill"></i>
+              <p>Import config</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-file-earmark-fill"></i>
+              <p>Gen pages</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-archive-fill"></i>
+              <p>3CX backup</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-keyboard-fill"></i>
+              <p>Gen S.dial</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-keyboard-fill"></i>
+              <p>Export S.dial</p>
+            </div>
+          </div>
+        </div>
+        <div class="functions-info">Backup Functions</div>
+        <div class="select-options">
+            <select name="brand" class="select-options-select">
+              <option value="0" selected disabled>Phonebook entries</option>
+            </select>
+            <div class="double-btn">
+                <button class="select-options-btn" id="load-bk-pbooks">Load</button>
+                <button class="select-options-btn" id="export-bk-pbooks">Export</button>
+                <button class="select-options-btn" id="export-bk-download">Download</button>
+            
+              </div>
+        </div>
+        <div class="center">
+            <div class="functions-btn-container">
+              <div class="functions-btn">
+                <i class="bi bi-arrow-up-circle-fill"></i>
+                <p>Import outbound</p>
+              </div>
+              <div class="functions-btn">
+                <i class="bi bi-arrow-down-circle-fill"></i>
+                <p>Import inbound</p>
+              </div>
+              <div class="functions-btn">
+                <i class="bi bi-person-fill"></i>
+                <p>Import Exts</p>
+              </div>
+            </div>
+          </div>
+        <div class="functions-info">DID Rules</div>
+        <div class="select-options">
+            <input name="brand" class="select-options-select" placeholder="GNR">
+            <div class="double-btn">
+                <input name="brand" class="select-options-select" placeholder="Office hour route">
+                <input name="brand" class="select-options-select" placeholder="Office close route">
+            </div>
+            <div class="double-btn">
+                <button class="select-options-btn" id="load-bk-pbooks">Genarate</button>
+                <button class="select-options-btn" id="export-bk-pbooks">Export</button>
+            </div>
+        </div>
+      </div>
+      <div class="center-middle" id="home-btn2">
+        <p>Home</p>
+      </div>
+    </div>
+  </body>
+</html>
