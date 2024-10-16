@@ -1,22 +1,65 @@
 /*  SETUP VAR AND EVENT LISTENER  */
 var pbxVersion = null;
-var git_values;
+var importConfigData = null;
+var import3CXBackupData = null; 
+var git_values, environment, fileHandle;
+
+const fs = new FileReader();
+const xml = new DOMParser();
+
+const importJsonOption = {
+  types: [
+    {
+      description: 'Json Settings',
+      accept: {
+        'file/*': ['.json']
+      }
+    },
+  ],
+  excludeAcceptAllOption: true,
+  multiple: false
+};
+
+const importXmlOption = {
+  types: [
+    {
+      description: '3CX Backup',
+      accept: {
+        'file/*': ['.xml']
+      }
+    },
+  ],
+  excludeAcceptAllOption: true,
+  multiple: false
+};
+
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
+
+    //DOMS 
     document.getElementById("home-btn1").addEventListener("click", showHome);
     document.getElementById("home-btn2").addEventListener("click", showHome);
     document.getElementById("version-sel-btn20").addEventListener("click", showFunctions);
     document.getElementById("version-sel-btn18").addEventListener("click", showFunctions);
     document.getElementById("version-sel-btntools").addEventListener("click", showTools);
     document.getElementById("chrome").addEventListener("click", showHome);
+
+    //EXT FUNCTIONS
     document.getElementById("f-gen-pages").addEventListener("click", genPagesBtn);
+    document.getElementById("f-import-config").addEventListener("click", readConfigFile);
+
+    //TOOL FUNCTIONS
+    document.getElementById("t-3cxbackup").addEventListener("click", read3CXBackup);
+
+
+    //ENV SETUP
+    environment = "excel";
+    if (window!=window.top){
+      environment = "web";
+    }
   }
 });
-
-/* GITHUB VARIABLES */
-
-
 
 /* TASKPANE DOMS */ 
 function showHome(){
@@ -42,6 +85,58 @@ function showTools(e){
   document.getElementById("tools-container").style.display ="grid";
 }
 
+async function readConfigFile(){
+  readFile(importJsonOption);
+}
+
+async function read3CXBackup() {
+  readFile(importXmlOption);
+}
+
+async function readFile(fileType){
+  try {
+    if(environment == "web"){
+        const fileElem = document.createElement("input");
+        fileElem.type = "file";
+        fileElem.accept = fileType.types[0].accept["file/*"][0];
+        fileElem.click();
+        fileElem.addEventListener("change", (event)=> {
+          const data = event.target.files[0];
+          const excelReader = new FileReader();
+          excelReader.onload = function (evnt) {
+            console.log(evnt.target.result)
+            onFileRead(evnt.target.result, fileType.types[0].accept["file/*"][0]);
+          }
+        excelReader.readAsText(data); 
+      })
+    }else{
+        [fileHandle] = await window.showOpenFilePicker(fileType);
+        const file = await fileHandle.getFile();
+        onFileRead(await file.text(), fileType.types[0].accept["file/*"][0]);
+      }
+    }
+   catch (error) {
+    console.log(error);
+  }
+}
+
+async function onFileRead(data, type) {
+  if(type == ".json"){
+    importConfigData = JSON.parse(data);
+  }else{
+    import3CXBackupData = xml.parseFromString(data, "text/xml");
+  }
+}
+
+function createOptions(parentID, data){
+  const parent = document.getElementById(parentID);
+  for (let i = 0; i < data.length; i++) {
+    let opt = document.createElement("option");
+    opt.innerText = data[i].text;
+    opt.value = data[i].value;
+    parent.appendChild(opt);
+  }
+}
 
 
 /* EXCEL PART */ 
@@ -60,15 +155,7 @@ export async function run() {
 }
 
 function genPagesBtn(){
-  switch (pbxVersion) {
-    case "v20": {
-      genPages(git_values[pbxVersion]);
-    }
-    break;
-  
-    default:
-    break;
-  }
+  genPages(git_values[pbxVersion]);
 }
 
 export async function genPages(vesion) {
@@ -121,18 +208,22 @@ function numberToColumn(number) {
   return a;
 }
 
+
+
+/* GITHUB VARIABLES */
+
 async function gitVal() {
   fetch('https://raw.githubusercontent.com/ZSirag/3CX/main/settings.json')
     .then(res => res.json())
     .then(json => {
     git_values = json;
-    /*let selElm = document.getElementById("excel-phone");
+    let selElm = document.getElementById("phone-brand");
     for (let i = 0; i < git_values.phones.length; i++) {
       const elm = document.createElement("option");
       elm.innerHTML = git_values.phones[i].name;
       elm.value = i;
       selElm.appendChild(elm);
-    }*/
+    }
   })
 }
 
