@@ -123,10 +123,18 @@ async function readFile(fileType){
 async function onFileRead(data, type) {
   if(type == ".json"){
     importConfigData = JSON.parse(data);
+    updateSettings(importConfigData);
   }else{
     import3CXBackupData = xml.parseFromString(data, "text/xml");
   }
 }
+
+async function updateSettings(data) {
+  createOptionsFromJSON("department", data.department ,"Name");
+  createOptionsFromJSON("trunk", data.trunk ,"TrunkName");
+  document.getElementById("fqdn").value = data.fqdn;
+}
+
 
 function createOptions(parentID, data){
   const parent = document.getElementById(parentID);
@@ -134,6 +142,17 @@ function createOptions(parentID, data){
     let opt = document.createElement("option");
     opt.innerText = data[i].text;
     opt.value = data[i].value;
+    parent.appendChild(opt);
+  }
+}
+
+function createOptionsFromJSON(parentID, data, key){
+  const parent = document.getElementById(parentID);
+  for (let i = 0; i < data.length; i++) {
+    console.log(data);
+    let opt = document.createElement("option");
+    opt.innerText = data[i][key];
+    opt.value = i;
     parent.appendChild(opt);
   }
 }
@@ -169,7 +188,7 @@ export async function genPages(vesion) {
         exitsPages.push(pageName.name);
       })
       vesion.pages.forEach((page, i) => {
-        if (exitsPages.includes(page.name) == false) {
+        if (exitsPages.incluwdes(page.name) == false) {
           context.workbook.worksheets.add(page.name);
         }
       })
@@ -194,7 +213,6 @@ export async function genPages(vesion) {
 }
 
 
-
 /* LIBS */ 
 function numberToColumn(number) {
   let a = "";
@@ -207,8 +225,6 @@ function numberToColumn(number) {
   }
   return a;
 }
-
-
 
 /* GITHUB VARIABLES */
 

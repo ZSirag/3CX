@@ -68,17 +68,17 @@
         </div>
         <div class="functions-info">Phones</div>
         <div id="brand-container" class="select-options">
-          <select name="brand" id="phone-brand" class="select-options-select">
+          <select id="phone-brand" class="select-options-select">
             <option value="0" selected disabled>Select phone brand</option>
           </select>
           <button id="phone-brand-btn" class="select-options-btn">Add phone</button>
         </div>
         <div class="functions-info">Departments</div>
-        <div id="brand-container" class="select-options">
-          <select name="brand" id="phone-brand" class="select-options-select">
+        <div id="department-container" class="select-options">
+          <select name="department" id="department" class="select-options-select">
             <option value="0" selected disabled>Select department</option>
           </select>
-          <button id="phone-brand-btn" class="select-options-btn">Set</button>
+          <button id="department-btn" class="select-options-btn">Set</button>
         </div>
       </div>
       <div class="center-middle" id="home-btn1">
@@ -122,43 +122,45 @@
         </div>
         <div class="functions-info">Backup Functions</div>
         <div class="select-options">
-            <select name="brand" class="select-options-select">
-              <option value="0" selected disabled>Phonebook entries</option>
-            </select>
-            <div class="double-btn">
-                <button class="select-options-btn" id="load-bk-pbooks">Load</button>
-                <button class="select-options-btn" id="export-bk-pbooks">Export</button>
-                <button class="select-options-btn" id="export-bk-download">Download</button>
-            
-              </div>
+          <select class="select-options-select">
+            <option value="0" selected disabled>Phonebook entries</option>
+          </select>
+          <div class="double-btn">
+            <button class="select-options-btn" id="load-bk-pbooks">Load</button>
+            <button class="select-options-btn" id="export-bk-pbooks">Export</button>
+            <button class="select-options-btn" id="export-bk-download">Download</button>
+          </div>
         </div>
         <div class="center">
-            <div class="functions-btn-container">
-              <div class="functions-btn">
-                <i class="bi bi-arrow-up-circle-fill"></i>
-                <p>Import outbound</p>
-              </div>
-              <div class="functions-btn">
-                <i class="bi bi-arrow-down-circle-fill"></i>
-                <p>Import inbound</p>
-              </div>
-              <div class="functions-btn">
-                <i class="bi bi-person-fill"></i>
-                <p>Import Exts</p>
-              </div>
+          <div class="functions-btn-container">
+            <div class="functions-btn">
+              <i class="bi bi-arrow-up-circle-fill"></i>
+              <p>Import outbound</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-arrow-down-circle-fill"></i>
+              <p>Import inbound</p>
+            </div>
+            <div class="functions-btn">
+              <i class="bi bi-person-fill"></i>
+              <p>Import Exts</p>
             </div>
           </div>
+        </div>
         <div class="functions-info">DID Rules</div>
         <div class="select-options">
-            <input name="brand" class="select-options-select" placeholder="GNR">
-            <div class="double-btn">
-                <input name="brand" class="select-options-select" placeholder="Office hour route">
-                <input name="brand" class="select-options-select" placeholder="Office close route">
-            </div>
-            <div class="double-btn">
-                <button class="select-options-btn" id="load-bk-pbooks">Genarate</button>
-                <button class="select-options-btn" id="export-bk-pbooks">Export</button>
-            </div>
+          <select id="trunk" class="select-options-select">
+            <option value="0" selected disabled>Select trunk</option>
+          </select>
+          <input class="select-options-select" placeholder="GNR" />
+          <div class="double-btn">
+            <input class="select-options-select" placeholder="Office hour route" />
+            <input class="select-options-select" placeholder="Office close route" />
+          </div>
+          <div class="double-btn">
+            <button class="select-options-btn" id="load-bk-pbooks">Genarate</button>
+            <button class="select-options-btn" id="export-bk-pbooks">Export</button>
+          </div>
         </div>
       </div>
       <div class="center-middle" id="home-btn2">
