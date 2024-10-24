@@ -12,7 +12,8 @@
             "pbookOffset": [0,1,9,3,4,5,7,8],
             "extOffset": [0,1,2,3,4,5,8,14,16,12,15],
             "pinOffset": [22],
-            "xmlOffset": [13]
+            "xmlOffset": [13],
+            "VMLanguageOffset": [20]
         }
     },
     "tools": {
