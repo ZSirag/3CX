@@ -19,7 +19,6 @@
           </div>
           <div id="version-sel-btn">
             <button id="version-sel-btn20">v20</button>
-            <button id="version-sel-btn18">v18</button>
             <button id="version-sel-btntools">Tools</button>
             <button id="chrome">Chrome extention</button>
           </div>
@@ -35,7 +34,7 @@
         </div>
       </div>
       <div style="overflow: auto">
-        <div id="version-info" class="headerinfo"></div>
+        <div id="version-info" class="headerinfo">V20</div>
         <div class="functions-info">Functions</div>
         <div id="fqdn-container"><input type="text" placeholder="FQDN" id="fqdn" /></div>
         <div class="center">
@@ -69,14 +68,14 @@
         <div class="functions-info">Phones</div>
         <div id="brand-container" class="select-options">
           <select id="phone-brand" class="select-options-select">
-            <option value="0" selected disabled>Select phone brand</option>
+            <option value="null" selected disabled>Select phone brand</option>
           </select>
           <button id="phone-brand-btn" class="select-options-btn">Add phone</button>
         </div>
         <div class="functions-info">Departments</div>
         <div id="department-container" class="select-options">
           <select name="department" id="department" class="select-options-select">
-            <option value="0" selected disabled>Select department</option>
+            <option value="null" selected disabled>Select department</option>
           </select>
           <button id="department-btn" class="select-options-btn">Set</button>
         </div>
@@ -123,7 +122,7 @@
         <div class="functions-info">Backup Functions</div>
         <div class="select-options">
           <select class="select-options-select">
-            <option value="0" selected disabled>Phonebook entries</option>
+            <option value="null" selected disabled>Phonebook entries</option>
           </select>
           <div class="double-btn">
             <button class="select-options-btn" id="load-bk-pbooks">Load</button>
@@ -150,7 +149,7 @@
         <div class="functions-info">DID Rules</div>
         <div class="select-options">
           <select id="trunk" class="select-options-select">
-            <option value="0" selected disabled>Select trunk</option>
+            <option value="null" selected disabled>Select trunk</option>
           </select>
           <input class="select-options-select" placeholder="GNR" />
           <div class="double-btn">

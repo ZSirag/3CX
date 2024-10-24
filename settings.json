@@ -1,20 +1,18 @@
 {
-    "v18": {
-
-    },
     "v20": {
         "pages": [
             {"name": "Extentions", "data": ["Number", "FirstName", "LastName", "Email", "Mobile", "Caller ID", "Department", "IP Phone", "Language", "Mac", "SBC"]},
-            {"name": "Phonebook", "data": ["Name", "LastName", "Email", "Number 1", "Number 2", "Nuber 3", "Number 4", "Nuber 5", "Number 6"]},
+            {"name": "Phonebook", "data": ["Name", "LastName", "Email", "Number 1", "Number 2", "Nuber 3", "Number 4", "Nuber 5"]},
             {"name": "Out Extentions", "data": ["Number","FirstName","LastName","EmailAddress","MobileNumber","OutboundCallerID","DID","Role","Department","ClickToCallAuth","WMApprove","WebMeetingFriendlyName","MAC","Template","Model","Router","Language","Ringtone","QRingtone","VMEnable","VMLanguage","VMPlayMsgDateTime","VMPIN","VMEmailOptions","VMNoPin","VMPlayCallerID","RecordCalls","RecordExternal","RecordCanSee","RecordCanDelete","RecordStartStop","Disabled","HideFWrules","DisableExternalCalls","HideInPhonebook","CallScreening","PinProtected","PinTimeout","AllowLanOnly","SIPID","DeliverAudio","HotDesk","SRTPMode","EmailMissedCalls","MS365SignInDisabled","MS365CalendarDisabled","MS365ContactsDisabled","MS365TeamsDisabled","GoogleSignInDisabled","BLF"]},
-            {"name": "Out Phonebook", "data": ["FirstName","LastName","Company","Mobile","Mobile2","Home","Home2","Business","Business2","Email","Other","BusinessFax","HomeFax","Pager"]}
+            {"name": "Out Phonebook", "data": ["FirstName","LastName","Company","Mobile","Mobile2","Home","Title","Business","Business2","Email","Other","BusinessFax","Department","Pager"]}
         ],
         "template": {
             "ext": ["","","","","","","","<role name=\"\" users\"\" />","","0","0","","","","","","","","","0","","0","","1","1","0","0","0","0","0","1","0","0","0","0","0","0","60","1","","0","0","0","0","","","","","","<PhoneDevice><BLFS/></PhoneDevice>"],
             "pbook": ["","","","","","","","","","","","","",""],
-            "pbookOffset": [0,1,9,3,4,5,6,7,8],
-            "extOffset": [0,1,2,3,4,5,8,13,15,11,14],
-            "pinOffset": [21]
+            "pbookOffset": [0,1,9,3,4,5,7,8],
+            "extOffset": [0,1,2,3,4,5,8,14,16,12,15],
+            "pinOffset": [22],
+            "xmlOffset": [13]
         }
     },
     "tools": {
@@ -29,19 +27,19 @@
             "models": ["Yealink T19 E2","Yealink T19P E2","Yealink T21 E2","Yealink T21P E2","Yealink T23G","Yealink T23P","Yealink T27G","Yealink T30P","Yealink T31G","Yealink T31P","Yealink T33G","Yealink T33P","Yealink T40G","Yealink T40P","Yealink T41S","Yealink T41U","Yealink T42S","Yealink T42U","Yealink T43U","Yealink T46S","Yealink T46U","Yealink T48S","Yealink T48U","Yealink T52S","Yealink T53","Yealink T53C","Yealink T53W","Yealink T54S","Yealink T54W","Yealink T57W"],
             "xml": "yealinkT4x.ph.xml",
             "langs": ["English", "French", "Italian", "German"],
-            "nosbc": "<PhoneDevice ProvType=\"0\" Secret=\"\" PhoneLanguage=\"Italian\" XferType=\"AttXfer\" RingTone=\"Ring 1\" QueueRingTone=\"Ring 6\" DateFormat=\"DD MMM YYYY (15 Jan 2017)\" TimeFormat=\"24-hour clock\" PowerLed=\"Missed calls only\" Backlight=\"1 minute\" ScreenSaver=\"5 minutes\"><CustomQueueRingTones /><mcgroups enabled=\"false\" /><DynamicOptions><option name=\"vlanwanport\" value=\"False\" /><option name=\"vlanwanid\" value=\"1\" /><option name=\"vlanwanpriority\" value=\"0\" /><option name=\"vlanpcport\" value=\"False\" /><option name=\"vlanpcid\" value=\"1\" /><option name=\"vlanpcpriority\" value=\"0\" /></DynamicOptions><LldpOptions><option name=\"lldpvalue\" value=\"True\" /></LldpOptions><CodecsPriority><Codec Priority=\"1\" PriorityVarName=\"codec1\" DisplayText=\"PCMU\" PayloadTypeName=\"payload1\" payload=\"PCMU\">0</Codec><Codec Priority=\"2\" PriorityVarName=\"codec2\" DisplayText=\"PCMA\" PayloadTypeName=\"payload2\" payload=\"PCMA\">8</Codec><Codec Priority=\"3\" PriorityVarName=\"codec3\" DisplayText=\"G722\" PayloadTypeName=\"payload3\" payload=\"G722\">9</Codec><Codec Priority=\"4\" PriorityVarName=\"codec4\" DisplayText=\"G729\" PayloadTypeName=\"payload4\" payload=\"G729\">18</Codec></CodecsPriority><BLFS OwnBlfs=\"0\" /></PhoneDevice>" 
+            "ring": ["Ring 1", "Ring 6"]
         },{
             "name": "Snom",
             "models": ["Snom D120","Snom D305","Snom D315","Snom D335","Snom D345","Snom D375","Snom D385","Snom 710","Snom D712","Snom D713","Snom 715/D715","Snom D717","Snom 720","Snom 725/D725","Snom D735","Snom D745","Snom 760","Snom D765","Snom D785","Snom D862","Snom D865"],
             "xml": "snom.ph.xml",
             "langs": ["English", "Frencais", "Italiano", "Deutsch"],
-            "nosbc": "<PhoneDevice ProvType=\"0\"PhoneLanguage=\"Italiano\"XferType=\"BXfer\"RingTone=\"Ring 1\"QueueRingTone=\"Ring 7\"DateFormat=\"European (day.month)\"TimeFormat=\"24-hour clock\"PowerLed=\"No Power LED notifications\"Backlight=\"Dim after 20 seconds\"><CustomQueueRingTones /><mcgroups enabled=\"false\"/><DynamicOptions><option name=\"vlanwanport\"value=\"False\"/><option name=\"vlanwanid\"value=\"\"/><option name=\"vlanwanpriority\"value=\"\"/><option name=\"vlanpcport\"value=\"False\"/><option name=\"vlanpcid\"value=\"\"/><option name=\"vlanpcpriority\"value=\"\"/></DynamicOptions><LldpOptions /><CodecsPriority><Codec Priority=\"1\"PriorityVarName=\"codec1\"DisplayText=\"G711u\">pcmu</Codec><Codec Priority=\"2\"PriorityVarName=\"codec2\"DisplayText=\"G711a\">pcma</Codec><Codec Priority=\"3\"PriorityVarName=\"codec3\"DisplayText=\"G722\">g722</Codec><Codec Priority=\"4\"PriorityVarName=\"codec4\"DisplayText=\"G729\">g729-annexb=no</Codec></CodecsPriority><BLFS OwnBlfs=\"0\"/></PhoneDevice>"
+            "ring": ["Ring 1", "Ring 3"]
         },{
             "name": "Fanvil",
             "models": ["Fanvil i56A","Fanvil V62","Fanvil V64","Fanvil V65","Fanvil X1S","Fanvil X1SG","Fanvil X2","Fanvil X210","Fanvil X210i-V2","Fanvil X210-V2","Fanvil X2C","Fanvil X3S","Fanvil X3S(P) Lite","Fanvil X3S(P) Pro","Fanvil X3SG","Fanvil X3SG Lite","Fanvil X3SG Pro","Fanvil X3U","Fanvil X3U Pro","Fanvil X4","Fanvil X4U","Fanvil X4U-V2","Fanvil X5S","Fanvil X5U","Fanvil X5U-V2","Fanvil X6","Fanvil X6U","Fanvil X6U-V2","Fanvil X7","Fanvil X7A","Fanvil X7C","Fanvil X7C-V2","Fanvil X7-V2"],
             "xml": "fanvil.ph.xml",
             "langs": ["English", "French", "Italian", "German"],
-            "nosbc": ""
+            "ring": ["Ring 1", "Ring 3"]
         }
     ]
 }

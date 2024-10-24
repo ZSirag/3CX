@@ -1,11 +1,11 @@
 /*  SETUP VAR AND EVENT LISTENER  */
-var pbxVersion = null;
 var importConfigData = null;
 var import3CXBackupData = null; 
 var git_values, environment, fileHandle;
 
 const fs = new FileReader();
 const xml = new DOMParser();
+const regexRows = /[^:0-9]/g;
 
 const importJsonOption = {
   types: [
@@ -36,18 +36,20 @@ const importXmlOption = {
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Excel) {
+    console.log(info);
 
     //DOMS 
     document.getElementById("home-btn1").addEventListener("click", showHome);
     document.getElementById("home-btn2").addEventListener("click", showHome);
     document.getElementById("version-sel-btn20").addEventListener("click", showFunctions);
-    document.getElementById("version-sel-btn18").addEventListener("click", showFunctions);
     document.getElementById("version-sel-btntools").addEventListener("click", showTools);
     document.getElementById("chrome").addEventListener("click", showHome);
 
     //EXT FUNCTIONS
     document.getElementById("f-gen-pages").addEventListener("click", genPagesBtn);
     document.getElementById("f-import-config").addEventListener("click", readConfigFile);
+    document.getElementById("department-btn").addEventListener("click", addDepartment);
+    document.getElementById("phone-brand-btn").addEventListener("click", addPhone);
 
     //TOOL FUNCTIONS
     document.getElementById("t-3cxbackup").addEventListener("click", read3CXBackup);
@@ -69,14 +71,9 @@ function showHome(){
 }
 
 function showFunctions(e){
-  pbxVersion = "v18";
-  if(e.srcElement.id=="version-sel-btn20"){
-    pbxVersion = "v20";
-  }
   document.getElementById("version-sel-container").style.display ="none";
   document.getElementById("functions-container").style.display ="grid";
   document.getElementById("tools-container").style.display ="none";
-  document.getElementById("version-info").innerText = pbxVersion;
 }
 
 function showTools(e){
@@ -155,6 +152,7 @@ function createOptionsFromJSON(parentID, data, key){
     opt.value = i;
     parent.appendChild(opt);
   }
+  parent.value = 0;
 }
 
 
@@ -173,8 +171,112 @@ export async function run() {
   }
 }
 
+export async function addDepartment() {
+  try {
+    await Excel.run(async(context)=> {
+      console.log("TETS");
+      const extPage = context.workbook.worksheets.getItem("Extentions");
+      const departmentRange = await advSelect(context, {columns: {start: "g", end: "g"}});
+      const departmentData = extPage.getRange(departmentRange);
+      departmentData.values = "Sel. Department";
+      const tempDepartments = [];
+      for (let i = 0; i < importConfigData.department.length; i++) {
+        tempDepartments.push(importConfigData.department[i].Name);
+      } 
+      console.log(tempDepartments);
+      departmentData.dataValidation.rule = {
+        list: {
+          inCellDropDown: true,
+          source: `${tempDepartments.join(",")}`
+        }
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+export async function addPhone(){
+  try {
+    await Excel.run(async (context) => {
+      const extPage = context.workbook.worksheets.getItem("Extentions");
+      const brand = document.getElementById("phone-brand").value;      
+
+      const phoneRange = await advSelect(context, {columns: {start: "h", end: "h"}});
+      const sbcRange = await advSelect(context, {columns: {start: "k", end: "k"}});
+      const langRange = await advSelect(context, {columns: {start: "i", end: "i"}});
+
+      const phoneRangeData = extPage.getRange(phoneRange);
+      const sbcRangeData = extPage.getRange(sbcRange);
+      const langRangeData = extPage.getRange(langRange);
+      
+      
+      phoneRangeData.values = "Sel. Device";
+      sbcRangeData.values = "Sel. SBC";
+      langRangeData.values = "Sel. Lang";
+
+
+      phoneRangeData.dataValidation.rule = {
+        list: {
+          inCellDropDown: true,
+          source: `${git_values.phones[brand].models.join(",")}`
+        }
+      }
+      langRangeData.dataValidation.rule = {
+        list: {
+          inCellDropDown: true,
+          source: `${git_values.phones[brand].langs.join(",")}`
+        }
+      }
+      let tmpSbc = [];
+      for (let i = 0; i < importConfigData.sbc.length; i++) {
+        const sbc = importConfigData.sbc[i].DisplayName;
+        tmpSbc.push(sbc)
+      }
+      sbcRangeData.dataValidation.rule = {
+        list: {
+          inCellDropDown: true,
+          source: `${tmpSbc.join(",")}`
+        }
+      }
+    })
+  }catch(error){
+    console.log(error)
+  }
+}
+
+
+
+// ADV SELECT
+async function advSelect(context, settings){
+  //LOAD SELECTED RANGE
+  let tmpRange = context.workbook.getSelectedRange();
+  tmpRange.load("address");
+  await context.sync();
+  let range = ((tmpRange.address).split("!"))[1];
+
+  // AVOID 1ST ROW SELECTION
+  let rows = range.split(":");
+  for(let i = 0; i < rows.length; i++){
+    rows[i] = rows[i].replace(regexRows, "");
+    if(rows[i] == 1){
+      rows[i] = 2;
+    }
+  }
+ 
+  //COMBINE SELECTED ROWS WT PASSED COLUMN
+  if(rows.length == 1 && settings.columns.start == settings.columns.end){
+    return `${settings.columns.start}${rows[0]}`;
+  }
+  if(rows.length == 1 && settings.columns.start != settings.columns.end){
+    return `${settings.columns.start}${rows[0]}:${settings.columns.end}${rows[0]}`;;
+  }
+  return `${settings.columns.start}${rows[0]}:${settings.columns.end}${rows[1]}`;;
+}
+
 function genPagesBtn(){
-  genPages(git_values[pbxVersion]);
+  genPages(git_values["v20"]);
 }
 
 export async function genPages(vesion) {
@@ -188,7 +290,7 @@ export async function genPages(vesion) {
         exitsPages.push(pageName.name);
       })
       vesion.pages.forEach((page, i) => {
-        if (exitsPages.incluwdes(page.name) == false) {
+        if (exitsPages.includes(page.name) == false) {
           context.workbook.worksheets.add(page.name);
         }
       })
