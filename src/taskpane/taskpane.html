@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3CX-Tools</title>
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js" defer></script>
+    <script src="./FileSaver.min.js"></script>
+    <script src="./jszip.min.js"></script>
     <script src="./taskpane.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="./taskpane.css" />
@@ -47,7 +49,7 @@
               <i class="bi bi-file-earmark-fill"></i>
               <p>Gen pages</p>
             </div>
-            <div class="functions-btn">
+            <div class="functions-btn" id="f-gen-exts">
               <i class="bi bi-person-fill-add"></i>
               <p>Create exts</p>
             </div>
@@ -55,7 +57,7 @@
               <i class="bi bi-person-vcard-fill"></i>
               <p>Create PBook</p>
             </div>
-            <div class="functions-btn">
+            <div class="functions-btn" id="f-export-exts">
               <i class="bi bi-person-fill-down"></i>
               <p>Export exts</p>
             </div>
