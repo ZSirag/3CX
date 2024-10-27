@@ -288,7 +288,7 @@ export async function exportExts(){
       extOutRowData.load("values");
       await context.sync();
 
-      const newArray = [git_values["v20"].pages[3].data].concat(extOutRowData.values);
+      const newArray = [git_values["v20"].pages[2].data].concat(extOutRowData.values);
       let dataOut = new Blob([newArray.join("\n")], {type: "text/plain"});
       saveAs(dataOut, "Extentions.csv")
     })
