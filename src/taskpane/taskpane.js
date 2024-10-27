@@ -245,12 +245,14 @@ export async function genExt() {
       for (let i = 0; i < extRowData.values.length; i++) {
         let template = git_values["v20"].template.ext.slice();
         template = combineArray(extRowData.values[i], template, git_values["v20"].template.extOffset);
+
+        template[11] = (extRowData.values[i][0]+extRowData.values[i][1]).replace(/\s/g, '');;
+        template[20] = importConfigData.globalACPRMSET;
+        template[22] = generateRandomPin();
+
         if(extRowData.values[i][9] != ""){
           const phoneConfig = retrivePhoneInfo(extRowData.values[i][7]);
           let router = "";
-          template[11] = extRowData.values[i][0]+extRowData.values[i][1];
-          template[20] = importConfigData.globalACPRMSET;
-          template[22] = generateRandomPin();
           if(phoneConfig != null){
             template[13] = phoneConfig.xml;
             template[17] = phoneConfig.ring[0]
