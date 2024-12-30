@@ -2,4 +2,3 @@ node_modules
 .vscode
 test.json
 chrome.json
-manifest.xml

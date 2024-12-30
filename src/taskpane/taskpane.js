@@ -525,6 +525,7 @@ export async function genPages(vesion) {
     //LOAD DATA
     await Excel.run(async (context) => {
       vesion.pages.forEach(page => {
+        console.log(page);
         const columns = numberToColumn(page.data.length - 1);
         const selPage = context.workbook.worksheets.getItem(page.name);
         const range = selPage.getRange(`A1:${columns}1`);
