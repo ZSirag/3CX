@@ -4,7 +4,8 @@
             {"name": "Extentions", "data": ["Number", "FirstName", "LastName", "Email", "Mobile", "Caller ID", "Department", "IP Phone", "Language", "Mac", "SBC"]},
             {"name": "Phonebook", "data": ["Name", "LastName", "Email", "Number 1", "Number 2", "Nuber 3", "Number 4", "Nuber 5"]},
             {"name": "Out Extentions", "data": ["Number","FirstName","LastName","EmailAddress","MobileNumber","OutboundCallerID","DID","Role","Department","ClickToCallAuth","WMApprove","WebMeetingFriendlyName","MAC","Template","Model","Router","Language","Ringtone","QRingtone","VMEnable","VMLanguage","VMPlayMsgDateTime","VMPIN","VMEmailOptions","VMNoPin","VMPlayCallerID","RecordCalls","RecordExternal","RecordCanSee","RecordCanDelete","RecordStartStop","Disabled","HideFWrules","DisableExternalCalls","HideInPhonebook","CallScreening","PinProtected","PinTimeout","AllowLanOnly","SIPID","DeliverAudio","HotDesk","SRTPMode","EmailMissedCalls","MS365SignInDisabled","MS365CalendarDisabled","MS365ContactsDisabled","MS365TeamsDisabled","GoogleSignInDisabled","BLF"]},
-            {"name": "Out Phonebook", "data": ["FirstName","LastName","Company","Mobile","Mobile2","Home","Title","Business","Business2","Email","Other","BusinessFax","Department","Pager"]}
+            {"name": "Out Phonebook", "data": ["FirstName","LastName","Company","Mobile","Mobile2","Home","Title","Business","Business2","Email","Other","BusinessFax","Department","Pager"]},            {"name": "GNR", "data": ""},
+            {"name": "Speed dial", "data": ""}
         ],
         "template": {
             "ext": ["","","","","","","","\"<role name=\"\"users\"\" />\"","","0","0","","","","","","","","","0","","0","","1","1","0","0","0","0","0","1","0","0","0","0","0","0","60","1","","0","0","0","0","","","","","","<PhoneDevice><BLFS/></PhoneDevice>"],
@@ -15,12 +16,6 @@
             "backupImportFilter": [0,1,2,3,5,7,9,11,13,15,17],
             "backupImportOffset": [0,1,2,3,4,5,6,7,8,9,12]
         }
-    },
-    "tools": {
-        "pages": [
-            {"name": "GNR", "data": ""},
-            {"name": "Speed dial", "data": ""}
-        ]
     },
     "phones": [
         {

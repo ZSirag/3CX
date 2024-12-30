@@ -56,7 +56,7 @@ Office.onReady((info) => {
 
     //TOOL FUNCTIONS
     document.getElementById("t-3cxbackup").addEventListener("click", read3CXBackup);
-
+    document.getElementById("t-gen-pages").addEventListener("click", genPagesBtn);
 
     //ENV SETUP
     environment = "excel";
@@ -173,6 +173,8 @@ function populatePB(rawPBook) {
         break;
       }
     });
+
+    data = filterArray(data, git_values["v20"].template.backupImportFilter);
     dataOut.push(data);
   }
   return dataOut;
@@ -537,6 +539,14 @@ function combineArray(sourceArray, destArray, offsets, length) {
     for (let i = 0; i < sourceArray.length; i++) {
       destArray[offsets[i]] = sourceArray[i];
     }
+  }
+  return destArray;
+}
+
+function filterArray(sourceArray, filter) {
+  let destArray = new Array(filter.length).fill("");
+  for (let i = 0; i < filter.length; i++) {
+    destArray[i] = sourceArray[filter[i]];
   }
   return destArray;
 }
