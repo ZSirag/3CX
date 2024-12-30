@@ -6,6 +6,7 @@ var git_values, environment, fileHandle;
 const fs = new FileReader();
 const xml = new DOMParser();
 const regexRows = /[^:0-9]/g;
+const backupPhoneBooks = {data: []};
 
 const importJsonOption = {
   types: [
@@ -50,6 +51,8 @@ Office.onReady((info) => {
     document.getElementById("phone-brand-btn").addEventListener("click", addPhone);
     document.getElementById("f-gen-exts").addEventListener("click", genExt);
     document.getElementById("f-export-exts").addEventListener("click", exportExts);
+    document.getElementById("f-gen-pbook").addEventListener("click", genPbook);
+    document.getElementById("f-export-pbook").addEventListener("click", exportPhonebook);
 
     //TOOL FUNCTIONS
     document.getElementById("t-3cxbackup").addEventListener("click", read3CXBackup);
@@ -123,7 +126,56 @@ async function onFileRead(data, type) {
     updateSettings(importConfigData);
   } else {
     import3CXBackupData = xml.parseFromString(data, "text/xml");
+    updatePhonebook(import3CXBackupData);
   }
+}
+
+async function updatePhonebook(data) {
+  const tenant = data.querySelector("Tenants");
+  const publicPhonebook = tenant.querySelector("PhoneBookEntries");
+  if(publicPhonebook.hasChildNodes()){
+    backupPhoneBooks.data.push({name: "Company phonebook", data: populatePB([publicPhonebook])});
+  }
+  const exts = data.documentElement.querySelectorAll("Extension");
+  for(let i = 0; i < exts.length; i++){
+    const tempExt = exts[i];
+    const tempPhonebook = tempExt.getElementsByTagName("PhoneBookEntries");
+    if(tempPhonebook[0].hasChildNodes()){
+      const fileName = `${(tempExt.getElementsByTagName("Number"))[0].innerHTML} - ${(tempExt.getElementsByTagName("FirstName"))[0].innerHTML}`;  
+      backupPhoneBooks.data.push({name: fileName, data: populatePB(tempPhonebook)});
+    }
+  }
+  createOptionsFromJSON("t-phonebook-list", backupPhoneBooks.data, "name");
+  console.log(backupPhoneBooks);  
+}
+
+function populatePB(rawPBook) {
+  console.log(rawPBook);
+  const pbEntry = rawPBook[0].getElementsByTagName("PhoneBookEntry");
+  const dataOut = [];
+  for(let j = 0; j < pbEntry.length; j++){
+    let data = new Array(18).fill("");
+    pbEntry[j].childNodes.forEach((item, index) => {
+      switch (item.tagName) {
+        case "FirstName": data[0] = item.innerHTML;
+        break;
+        case "LastName": data[1] = item.innerHTML;
+        break;
+        case "CompanyName": data[2] = item.innerHTML;
+        break;
+        case "PhoneNumber": data[3] = item.innerHTML;
+        break;
+        default: {
+            if(item.tagName != undefined){
+              data[index+4] = item.innerHTML
+            }
+          };
+        break;
+      }
+    });
+    dataOut.push(data);
+  }
+  return dataOut;
 }
 
 async function updateSettings(data) {
@@ -232,6 +284,49 @@ export async function addPhone() {
     console.log(error)
   }
 }
+
+export async function genPbook() {
+  try {
+    await Excel.run(async (context) => {
+      const pbookPage = context.workbook.worksheets.getItem("Phonebook");
+      const pbookRange = await advSelect(context, { columns: { start: "a", end: "h" }});
+      const pbookRowData = pbookPage.getRange(pbookRange);
+      pbookRowData.load("values");
+      await context.sync();
+      const dataOut = new Array(pbookRowData.values.length);
+      for (let i = 0; i < dataOut.length; i++) {
+        let template = git_values["v20"].template.pbook.slice();
+        template = combineArray(pbookRowData.values[i], template, git_values["v20"].template.pbookOffset);
+        dataOut[i] = template;
+      }
+      const pbookOutPage = context.workbook.worksheets.getItem("Out Phonebook");
+      const outPbookPageRange = pbookOutPage.getRange(`A2:N${dataOut.length+1}`);
+      outPbookPageRange.values = dataOut;
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
+export async function exportPhonebook(){
+  try {
+    await Excel.run(async (context) => {
+      const pbookOutPage = context.workbook.worksheets.getItem("Out Phonebook");
+      const pbookOutRange = await advSelect(context, { columns: { start: "a", end: "n" } });
+      const pbookOutRowData = pbookOutPage.getRange(pbookOutRange);
+      pbookOutRowData.load("values");
+      await context.sync();
+
+      const newArray = [git_values["v20"].pages[3].data].concat(pbookOutRowData.values);
+      let dataOut = new Blob([newArray.join("\n")], {type: "text/plain"});
+      saveAs(dataOut, "Phonebook.csv")
+    });
+  } catch(error){
+    console.log(error);
+  }
+}
+
 
 export async function genExt() {
   try {

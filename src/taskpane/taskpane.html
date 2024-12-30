@@ -53,7 +53,7 @@
               <i class="bi bi-person-fill-add"></i>
               <p>Create exts</p>
             </div>
-            <div class="functions-btn">
+            <div class="functions-btn" id="f-gen-pbook">
               <i class="bi bi-person-vcard-fill"></i>
               <p>Create PBook</p>
             </div>
@@ -61,7 +61,7 @@
               <i class="bi bi-person-fill-down"></i>
               <p>Export exts</p>
             </div>
-            <div class="functions-btn">
+            <div class="functions-btn" id="f-export-pbook">
               <i class="bi bi-postcard-fill"></i>
               <p>Export PBook</p>
             </div>
@@ -96,7 +96,7 @@
       </div>
       <div style="overflow-y: auto">
         <div class="headerinfo">TOOLS</div>
-        <div class="functions-info">DID Functions</div>
+        <div class="functions-info">Functions</div>
         <div class="center">
           <div class="functions-btn-container">
             <div class="functions-btn">
@@ -113,39 +113,19 @@
             </div>
             <div class="functions-btn">
               <i class="bi bi-keyboard-fill"></i>
-              <p>Gen S.dial</p>
-            </div>
-            <div class="functions-btn">
-              <i class="bi bi-keyboard-fill"></i>
               <p>Export S.dial</p>
             </div>
           </div>
         </div>
         <div class="functions-info">Backup Functions</div>
         <div class="select-options">
-          <select class="select-options-select">
+          <select class="select-options-select" id="t-phonebook-list">
             <option value="null" selected disabled>Phonebook entries</option>
           </select>
           <div class="double-btn">
             <button class="select-options-btn" id="load-bk-pbooks">Load</button>
             <button class="select-options-btn" id="export-bk-pbooks">Export</button>
             <button class="select-options-btn" id="export-bk-download">Download</button>
-          </div>
-        </div>
-        <div class="center">
-          <div class="functions-btn-container">
-            <div class="functions-btn">
-              <i class="bi bi-arrow-up-circle-fill"></i>
-              <p>Import outbound</p>
-            </div>
-            <div class="functions-btn">
-              <i class="bi bi-arrow-down-circle-fill"></i>
-              <p>Import inbound</p>
-            </div>
-            <div class="functions-btn">
-              <i class="bi bi-person-fill"></i>
-              <p>Import Exts</p>
-            </div>
           </div>
         </div>
         <div class="functions-info">DID Rules</div>
