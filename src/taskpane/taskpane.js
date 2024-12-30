@@ -56,7 +56,8 @@ Office.onReady((info) => {
 
     //TOOL FUNCTIONS
     document.getElementById("t-3cxbackup").addEventListener("click", read3CXBackup);
-    document.getElementById("t-gen-pages").addEventListener("click", genPagesBtn);
+    document.getElementById("load-bk-pbooks").addEventListener("click", loadPhonebook);
+    document.getElementById("export-bk-download").addEventListener("click", exportPhonebookBackup);
 
     //ENV SETUP
     environment = "excel";
@@ -210,6 +211,27 @@ export async function run() {
     });
   } catch (error) {
     console.error(error);
+  }
+}
+
+
+export async function loadPhonebook() {
+  try{
+    await Excel.run(async (context) => {
+      const selElm = document.getElementById("t-phonebook-list").value;
+      if(selElm != "null"){
+        const dataOut = [];
+        for (let i = 0; i < backupPhoneBooks.data[selElm].data.length; i++) {
+          const template = git_values["v20"].template.pbook.slice();
+          dataOut.push(combineArray(backupPhoneBooks.data[selElm].data[i], template, git_values["v20"].template.backupImportOffset));
+        }
+        const pbookOutPage = context.workbook.worksheets.getItem("Out Phonebook");
+        const outPbookPageRange = pbookOutPage.getRange(`A2:N${dataOut.length+1}`);
+        outPbookPageRange.values = dataOut;
+      }
+    });
+  } catch(error){
+    console.log(error);
   }
 }
 
@@ -396,6 +418,27 @@ export async function exportExts(){
   }
 }
 
+function exportPhonebookBackup(){
+  const selElm = document.getElementById("t-phonebook-list").value;
+  var zip = new JSZip();
+  console.log("test")
+  if(selElm != "null"){
+    for (let i = 0; i < backupPhoneBooks.data.length; i++) {
+      const dataOut = [];
+      dataOut.push(git_values["v20"].pages[3].data.join(","));
+      for (let j = 0; j < backupPhoneBooks.data[i].data.length; j++) {
+        const template = git_values["v20"].template.pbook.slice();
+        let tmpArrary = combineArray(backupPhoneBooks.data[i].data[j], template, git_values["v20"].template.backupImportOffset);
+        dataOut.push(tmpArrary.join(","));
+        console.log(dataOut);
+      }
+      zip.file(`${backupPhoneBooks.data[i].name}.csv`, dataOut.join("\n"));
+    }
+    zip.generateAsync({type:"blob"}).then(function (blob) {
+      saveAs(blob, "PhonebookBackup.zip");
+    });
+  }
+}
 
 function retrivePhoneInfo(model){
   for (let i = 0; i < git_values.phones.length; i++) {

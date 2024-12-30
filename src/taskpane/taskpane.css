@@ -206,6 +206,6 @@ button:active {
     grid-template-rows: 100px auto 30px;
 }
 
-#export-bk-pbooks {
+#export-bk-download {
     background-color: var(--blue-bg) !important;
 }
